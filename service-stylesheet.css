@@ -1,0 +1,65 @@
+/**service styling**/
+
+.service-section{
+    background-color: #026670;
+}
+
+.service-intro{
+    background-color: #fce181;
+    margin-top: 10px;
+    margin-bottom: 10px;
+
+}
+
+
+.dropdown-item:hover{
+    background-color: #fce1818e ;
+}
+
+.container .card{
+    transition: all 0.2s ease;
+    cursor: pointer;
+
+
+}
+.container .card:hover{
+
+    box-shadow: 5px 6px 6px 2px #e9ecef;
+    transform: scale(1.1);
+    background-color: #fce181;
+    color: #026670;
+}
+
+
+/**events styling**/
+
+.service-title{
+    padding-top: 20px;
+}
+
+.service-body{
+
+    margin-right: 50px;
+    margin-left: 50px;
+}
+
+@media (max-width: 576px) { 
+
+    .crs-remove{
+        display: none;
+
+    }
+
+    .service-intro .service-description{
+        font-size: 11px;
+        text-align:center;
+
+    }
+ }
+
+ @media (min-width: 581px) and (max-width: 1063px) {
+     #carouselExampleCaptions{
+         width: 100%;
+         margin-left: 0px;
+     }
+ }
