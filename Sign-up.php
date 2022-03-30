@@ -1,3 +1,50 @@
+<?php
+
+if(isset($_POST['submit'])){
+
+        if(empty($_POST['fullname']))
+        {
+            echo 'A fullname is required <br/>';
+        }else
+        {
+        echo htmlspecialchars($_POST['fullname']);
+        }
+
+        if(empty($_POST['student_id']))
+        {
+            echo 'A student id is required <br/>';
+        }else
+        {
+        echo htmlspecialchars($_POST['student_id']);
+        }
+
+        if(empty($_POST['contact_details']))
+        {
+            echo 'Contact details are required <br/>';
+        }else
+        {
+        echo htmlspecialchars($_POST['contact_details']);
+        }
+
+        if(empty($_POST['s_password']))
+        {
+            echo 'A password is required <br/>';
+        }else
+        {
+        echo htmlspecialchars($_POST['s_password']);
+        }
+
+        if(empty($_POST['r_password']))
+        {
+            echo 'Repeat password is required <br/>';
+        }else
+        {
+        echo htmlspecialchars($_POST['r_password']);
+        }
+}
+
+?>
+
 <!doctype html>
 <html lang="en">
 
@@ -84,7 +131,7 @@
                                         <div class="d-flex flex-row align-items-center mb-4">
                                             <i class="fas fa-key fa-lg me-3 fa-fw pb-4"></i>
                                             <div class="form-outline flex-fill mb-0">
-                                                <input type="password" id="form3Example4cd" class="form-control" />
+                                                <input type="password" name="r_password" id="form3Example4cd" class="form-control" />
                                                 <label class="form-label" for="form3Example4cd">Repeat your
                                                     password</label>
                                             </div>
@@ -99,9 +146,9 @@
                                         </div>
 
                                         <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-                                            <a href="login.html">
-                                                <button type="submit" name="submit"
-                                                    class="btn btn-primary btn-lg">Register</button>
+                                            <a href="login.html" >
+                                                <button  type="submit" name="submit" class="btn btn-primary btn-lg">Register
+                                                </button>
                                             </a>
 
                                         </div>
