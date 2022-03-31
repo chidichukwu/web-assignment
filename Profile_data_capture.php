@@ -22,11 +22,11 @@ if(!$config){
 
 if($Item_type == "Products"){
 
-    $sql="INSERT INTO $Item_type(product_name,product_price,uploaded_by,product_quantity,product_image,additional_info)
+    $sql="INSERT INTO $Item_type (product_name,product_price,uploaded_by,product_quantity,product_image,additional_info)
         VALUES('$Item_name','$Item_price','$Item_studentid','$Item_quantity','$Item_image','$Item_description')";
 
     if(mysqli_query($config,$sql)){
-        echo"<br><br>Data added successfully.";
+        
     }
     else{
         echo"ERROR:Could not be added $sql".mysqli_error($config);
@@ -35,11 +35,11 @@ if($Item_type == "Products"){
 
 if($Item_type == "Tutoring services"){
 
-    $sql="INSERT INTO Tutoring_service(tutoring_service_name,tutoring_service_price,uploaded_by,tutoring_service_image,additional_info)
+    $sql="INSERT INTO tutoring_service(tutoring_service_name,tutoring_service_price,uploaded_by,tutoring_service_image,additional_info)
         VALUES('$Item_name','$Item_price','$Item_studentid','$Item_image','$Item_description')";
 
     if(mysqli_query($config,$sql)){
-        echo"<br><br>Data added successfully.";
+        
     }
     else{
         echo"ERROR:Could not be added $sql".mysqli_error($config);
@@ -48,24 +48,50 @@ if($Item_type == "Tutoring services"){
 
 if($Item_type == "Events"){
 
-    $sql="INSERT INTO $Item_type(event_name,event_price,uploaded_by,event_image,additional_info)
+    $sql="INSERT INTO $Item_type (event_name,event_price,uploaded_by,event_image,additional_info)
         VALUES('$Item_name','$Item_price','$Item_studentid','$Item_image','$Item_description')";
 
     if(mysqli_query($config,$sql)){
-        echo"<br><br>Data added successfully.";
+        
     }
     else{
         echo"ERROR:Could not be added $sql".mysqli_error($config);
     }
 };
 
-if($Item_type == "Make-up services" || "Nail services" || "Hair-dressing services"){
+if($Item_type == "Make-up services" ){
 
     $sql="INSERT INTO cosmetics(cosmetics_name,cosmetics_price,cosmetics_quantity,uploaded_by,cosmetics_type,cosmetics_image,additional_info)
         VALUES('$Item_name','$Item_price','$Item_quantity','$Item_studentid','$Item_type','$Item_image','$Item_description')";
 
     if(mysqli_query($config,$sql)){
-        echo"<br><br>Data added successfully.";
+        
+    }
+    else{
+        echo"ERROR:Could not be added $sql".mysqli_error($config);
+    }
+};
+
+if($Item_type == "Nail services"){
+
+    $sql="INSERT INTO cosmetics(cosmetics_name,cosmetics_price,cosmetics_quantity,uploaded_by,cosmetics_type,cosmetics_image,additional_info)
+        VALUES('$Item_name','$Item_price','$Item_quantity','$Item_studentid','$Item_type','$Item_image','$Item_description')";
+
+    if(mysqli_query($config,$sql)){
+        
+    }
+    else{
+        echo"ERROR:Could not be added $sql".mysqli_error($config);
+    }
+};
+
+if($Item_type == "Hair-dressing services"){
+
+    $sql="INSERT INTO cosmetics(cosmetics_name,cosmetics_price,cosmetics_quantity,uploaded_by,cosmetics_type,cosmetics_image,additional_info)
+        VALUES('$Item_name','$Item_price','$Item_quantity','$Item_studentid','$Item_type','$Item_image','$Item_description')";
+
+    if(mysqli_query($config,$sql)){
+        
     }
     else{
         echo"ERROR:Could not be added $sql".mysqli_error($config);
@@ -78,7 +104,7 @@ if($Item_type == "Other services"){
         VALUES('$Item_name','$Item_description','$Item_price','$Item_image','$Item_studentid','$Item_duration')";
 
     if(mysqli_query($config,$sql)){
-        echo"<br><br>Data added successfully.";
+        
     }
     else{
         echo"ERROR:Could not be added $sql".mysqli_error($config);

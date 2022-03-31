@@ -50,6 +50,62 @@ if(isset($_POST["submit"])){
             $name_err = "Only letters and white space allowed";
         }
     }
+
+    if(empty($_POST['Item_price'])){
+
+        $price_err=" Amount in nearest emalangeni.";
+    }else{
+        $item_price = clean_input($_POST['Item_price']);
+        if(!preg_match("/^\\d+$/",$item_price)){
+            $price_err = "Only number allowed";
+
+        }
+    }
+
+    if(empty($_POST['Item_quantity'])){
+
+        $qtd_err="Please provide quantity of item.";
+    }else{
+        $item_quantity = clean_input($_POST['Item_quantity']);
+        if(!preg_match("/^\\d+$/",$item_quantity)){
+            $qtd_err = "Only number allowed";
+
+        }
+    }
+
+    if(empty($_POST['Item_duration'])){
+
+        $duration_err="Enter a number";
+    }else{
+        $item_duration = clean_input($_POST['Item_duration']);
+        if(!preg_match("/^\\d+$/",$item_duration)){
+            $duration_err = "Only number allowed";
+
+        }
+    }
+
+    if(empty($_POST['Item_description'])){
+
+        $info_err="Please enter additional Information.";
+    }else{
+        $item_description = clean_input($_POST['Item_description']);
+        if(!preg_match("/^[a-zA-Z-' ]*$/",$item_description)){
+            $info_err = "Only letters and white space allowed";
+
+        }
+    }
+
+    if(!empty($_POST["Item_name"]) && !empty($_POST["Item_price"]) && !empty($_POST["Item_quantity"])
+    && !empty($_POST["Item_duration"]) && !empty($_POST["Item_description"])){
+
+        $Item_name = $_POST["Item_name"];
+        $Item_price = $_POST["Item_price"];
+        $Item_quantity = $_POST["Item_quantity"];
+        $Item_duration = $_POST["Item_duration"];
+        $Item_description = $_POST["Item_description"];
+
+        include('Profile_data_capture.php');
+    }
 }
 
 function clean_input($data){
@@ -125,14 +181,16 @@ function clean_input($data){
                         <i class="bi bi-person-video2"></i>
                         <?php if(isset($_SESSION["user"])){
                             echo $_SESSION["user"];}
-                            else{ echo "Profile";} ?></a>
+                            else{ echo "Profile";} ?>
+                    </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="login.php">
                         <i class="bi-person-circle"></i>
                         <?php if(isset($_SESSION["user"])){
                             echo "Logout";}
-                            else{ echo "Login";} ?></a>
+                            else{ echo "Login";} ?>
+                    </a>
                 </li>
             </ul>
             <!-- Links -->
@@ -149,19 +207,22 @@ function clean_input($data){
                         <div class="rounded-top text-white d-flex flex-row"
                             style="background-color: #000; height:200px;">
                             <div class="ms-4 mt-5 d-flex flex-column" style="width: 150px;">
-                                <img src="/images/african-girl.jpg" alt="Student image"
+                                <img src="/images/UNESWA_LOGO.jpg" alt="Student image"
                                     class="img-fluid img-thumbnail mt-1 mb-2"
                                     style="width: 150px; z-index: 1; height: 200px;" id="profile-picture">
-                                <button type="button" class="btn btn-outline-dark" data-mdb-ripple-color="dark"
-                                    style="z-index: 1;">
-                                    Edit profile
-                                </button>
+
                             </div>
                             <div class="ms-3" style="margin-top: 100px;">
-                                <h5><?php if(isset($_SESSION["fullname"])){echo $_SESSION["fullname"];} ?></h5>
-                                <h6>Student ID :  <?php if(isset($_SESSION["user"])){
-                            echo $_SESSION["user"];} ?></h6>
-                                <h6>Cell-number : <?php if(isset($_SESSION["contact_details"])){ echo $_SESSION["contact_details"];} ?></h6>
+                                <h5>
+                                    <?php if(isset($_SESSION["fullname"])){echo $_SESSION["fullname"];} ?>
+                                </h5>
+                                <h6>Student ID :
+                                    <?php if(isset($_SESSION["user"])){
+                            echo $_SESSION["user"];} ?>
+                                </h6>
+                                <h6>Cell-number :
+                                    <?php if(isset($_SESSION["contact_details"])){ echo $_SESSION["contact_details"];} ?>
+                                </h6>
 
                             </div>
                         </div>
@@ -174,40 +235,50 @@ function clean_input($data){
 
                                 </div>
                                 <div>
-                                    <p class="mb-1 h5">478</p>
-                                    <p class="small text-muted mb-0">Following</p>
+                                    <p class="mb-1 h5">Student</p>
+                                    <p class="small text-muted mb-0">Platform</p>
                                 </div>
                             </div>
                         </div>
                         <div class="card-body p-4 text-black">
-                            <form class="row g-3" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF'])?>" method="POST">
+                            <form class="row g-3" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF'])?>"
+                                method="POST">
                                 <div class="col-md-4">
                                     <label class="form-label" for="form3Example3c"> Item name</label> &nbsp; &nbsp;
-                                    <span style="color: red;"><?php echo $name_err; ?></span>
+                                    <span style="color: red;">
+                                        <?php echo $name_err; ?>
+                                    </span>
                                     <input type="text" name="Item_name" id="form3Example3c" class="form-control" />
                                 </div>
 
                                 <div class="col-md-4">
                                     <label class="form-label" for="form3Example3c">Price (E)</label> &nbsp; &nbsp;
-                                    <span style="color: red;"><?php echo $price_err; ?></span>
+                                    <span style="color: red;">
+                                        <?php echo $price_err; ?>
+                                    </span>
                                     <input type="text" name="Item_price" id="form3Example3c" class="form-control" />
                                 </div>
 
                                 <div class="col-md-4">
                                     <label class="form-label" for="form3Example3c"> Quantity</label> &nbsp; &nbsp;
-                                    <span style="color: red;"><?php echo $qtd_err; ?></span>
+                                    <span style="color: red;">
+                                        <?php echo $qtd_err; ?>
+                                    </span>
                                     <input type="text" name="Item_quantity" id="form3Example3c" class="form-control" />
                                 </div>
 
                                 <div class="col-md-4">
-                                    <label class="form-label" for="form3Example3c">Item Duration (days)</label> &nbsp; &nbsp;
-                                    <span style="color: red;"><?php echo $duration_err; ?></span>
+                                    <label class="form-label" for="form3Example3c">Item Duration (days)</label> &nbsp;
+                                    <span style="color: red;">
+                                        <?php echo $duration_err; ?>
+                                    </span>
                                     <input type="text" name="Item_duration" id="form3Example3c" class="form-control" />
                                 </div>
 
                                 <div class="col-md-4">
                                     <label for="validationServer04" class="form-label">Categories</label>
-                                    <select class="form-select " name="Item_type" id="validationServer04" aria-describedby="validationServer04Feedback" required>
+                                    <select class="form-select " name="Item_type" id="validationServer04"
+                                        aria-describedby="validationServer04Feedback" required>
                                         <option selected disabled value="">Choose categories...</option>
                                         <option>Products</option>
                                         <option>Tutoring services</option>
@@ -222,21 +293,29 @@ function clean_input($data){
                                 <div class="col-md-4 pb-4">
                                     <label for="formFileMultiple" class="form-label">Upload Image</label>
                                     <div class="input-group has-validation">
-                                        <input class="form-control" name="Item_image" type="file" id="formFileMultiple" multiple />
+                                        <input class="form-control" name="Item_image" type="file" id="formFileMultiple"
+                                            multiple />
                                     </div>
                                 </div>
 
                                 <div class="col-md-6">
-                                    <label class="form-label" for="form3Example3c"> Item Information / Description</label>
-                                    <p style="color: red;"><?php echo $info_err; ?></p>
-                                    <textarea type="text" name="Item_description" rows="3" class="form-control " id="form3Example3c"></textarea>
+                                    <label class="form-label" for="form3Example3c"> Item Information /
+                                        Description</label>
+                                    <p style="color: red;">
+                                        <?php echo $info_err; ?>
+                                    </p>
+                                    <textarea type="text" name="Item_description" rows="3" class="form-control "
+                                        id="form3Example3c"></textarea>
                                 </div>
 
                                 <div class="col-12">
                                     <div class="form-check">
-                                        <input class="form-check-input is-invalid" type="checkbox" value="" id="invalidCheck3" aria-describedby="invalidCheck3Feedback" required>
-                                        <label class="form-check-label" for="invalidCheck3">Agree to terms and conditions</label>
-                                        <div id="invalidCheck3Feedback" class="invalid-feedback">You must agree before submitting.</div>
+                                        <input class="form-check-input is-invalid" type="checkbox" value=""
+                                            id="invalidCheck3" aria-describedby="invalidCheck3Feedback" required>
+                                        <label class="form-check-label" for="invalidCheck3">Agree to terms and
+                                            conditions</label>
+                                        <div id="invalidCheck3Feedback" class="invalid-feedback">You must agree before
+                                            submitting.</div>
                                     </div>
                                 </div>
 
