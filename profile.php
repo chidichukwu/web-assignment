@@ -1,3 +1,65 @@
+<?php
+if(!session_start()){
+    session_start();
+}
+
+$servername="localhost";
+$username="root";
+$password="";
+$db="E_Market";
+
+$config=mysqli_connect($servername,$username,$password,$db);
+
+if(!$config){
+    die("Connection failed: \n".mysqli_connect_error());
+}
+
+$test_user = $_SESSION["user"];
+
+$sql = "SELECT fullname, contact_details , student_id FROM new_members WHERE student_id = $test_user";
+
+if($output = mysqli_query($config,$sql)){
+
+    if(mysqli_num_rows($output)>0){
+        $record = mysqli_fetch_array($output);
+        session_unset();
+        $_SESSION["user"] = $record['student_id'];
+        $_SESSION["fullname"] = $record['fullname'];
+        $_SESSION["contact_details"] = $record['contact_details'];
+    }
+}
+
+mysqli_close($config);
+?>
+
+<?php
+$name_err = $item_name = "";
+$price_err = $item_price = "";
+$qtd_err = $item_quantity = "";
+$duration_err = $item_duration = "";
+$info_err = $item_description = "";
+
+if(isset($_POST["submit"])){
+
+    if(empty($_POST['Item_name'])){
+        $name_err="An item name is required";
+    }
+    else{
+        $item_name = clean_input($_POST['Item_name']);
+        if(!preg_match("/^[a-zA-Z-' ]*$/",$item_name)){
+            $name_err = "Only letters and white space allowed";
+        }
+    }
+}
+
+function clean_input($data){
+    $data = trim($data);
+    $data = stripslashes($data);
+    $data = htmlspecialchars($data);
+    return $data;
+}
+?>
+
 <!doctype html>
 <html lang="en">
 
@@ -44,29 +106,33 @@
             <!-- Links -->
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item ">
-                    <a class="nav-link" href="#">
+                    <a class="nav-link" href="homepage.php">
                         <i class="bi-house-fill"></i>
                         Home </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="product page.html">
+                    <a class="nav-link" href="product_page.php">
                         <i class="bi-cart4"></i>
                         Products</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="services.html">
+                    <a class="nav-link" href="services.php">
                         <i class="bi-gear-fill"></i>
                         Services</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="Profile-page.html">
+                    <a class="nav-link" href="profile.php">
                         <i class="bi bi-person-video2"></i>
-                        Profile</a>
+                        <?php if(isset($_SESSION["user"])){
+                            echo $_SESSION["user"];}
+                            else{ echo "Profile";} ?></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="login.html">
+                    <a class="nav-link" href="login.php">
                         <i class="bi-person-circle"></i>
-                        Logout</a>
+                        <?php if(isset($_SESSION["user"])){
+                            echo "Logout";}
+                            else{ echo "Login";} ?></a>
                 </li>
             </ul>
             <!-- Links -->
@@ -92,9 +158,10 @@
                                 </button>
                             </div>
                             <div class="ms-3" style="margin-top: 100px;">
-                                <h5>Naomi Horwitz</h5>
-                                <h6>Student ID : 292103295</h6>
-                                <h6>Cell-number : +268 76629134</h6>
+                                <h5><?php if(isset($_SESSION["fullname"])){echo $_SESSION["fullname"];} ?></h5>
+                                <h6>Student ID :  <?php if(isset($_SESSION["user"])){
+                            echo $_SESSION["user"];} ?></h6>
+                                <h6>Cell-number : <?php if(isset($_SESSION["contact_details"])){ echo $_SESSION["contact_details"];} ?></h6>
 
                             </div>
                         </div>
@@ -113,52 +180,34 @@
                             </div>
                         </div>
                         <div class="card-body p-4 text-black">
-                            <form class="row g-3" action="./Profile_data_capture.php" method="POST">
+                            <form class="row g-3" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF'])?>" method="POST">
                                 <div class="col-md-4">
-                                    <label for="validationServer01" class="form-label">Item name /Title</label>
-                                    <input type="text" name="Item_name" class="form-control is-valid"
-                                        id="validationServer01" required>
-                                    <div class="valid-feedback">
-                                        Looks good!
-                                    </div>
+                                    <label class="form-label" for="form3Example3c"> Item name</label> &nbsp; &nbsp;
+                                    <span style="color: red;"><?php echo $name_err; ?></span>
+                                    <input type="text" name="Item_name" id="form3Example3c" class="form-control" />
                                 </div>
 
                                 <div class="col-md-4">
-                                    <label for="validationServerUsername" class="form-label">Price</label>
-                                    <div class="input-group has-validation">
-                                        <span class="input-group-text" id="inputGroupPrepend3">E</span>
-                                        <input type="text" name="Item_price" class="form-control is-invalid"
-                                            id="validationServerUsername"
-                                            aria-describedby="inputGroupPrepend3 validationServerUsernameFeedback"
-                                            required>
-                                        <span class="input-group-text">.00</span>
-                                        <div id="validationServerUsernameFeedback" class="invalid-feedback">
-                                            Enter amount (to the nearest emalangeni).
-                                        </div>
-                                    </div>
+                                    <label class="form-label" for="form3Example3c">Price (E)</label> &nbsp; &nbsp;
+                                    <span style="color: red;"><?php echo $price_err; ?></span>
+                                    <input type="text" name="Item_price" id="form3Example3c" class="form-control" />
                                 </div>
 
                                 <div class="col-md-4">
-                                    <label for="validationServer05" class="form-label">Quantity</label>
-                                    <input type="text" name="Item_quantity" class="form-control is-invalid"
-                                        id="validationServer05" aria-describedby="validationServer05Feedback" required>
-                                    <div id="validationServer05Feedback" class="invalid-feedback">
-                                        Please provide quantity of item.
-                                    </div>
+                                    <label class="form-label" for="form3Example3c"> Quantity</label> &nbsp; &nbsp;
+                                    <span style="color: red;"><?php echo $qtd_err; ?></span>
+                                    <input type="text" name="Item_quantity" id="form3Example3c" class="form-control" />
                                 </div>
-                                <div class="col-md-4">
-                                    <label for="validationServer06" class="form-label">Item Duration</label>
-                                    <input type="text" name="Item_duration" class="form-control is-invalid"
-                                        id="validationServer06" aria-describedby="validationServer06Feedback" required>
-                                    <div id="validationServer06Feedback" class="invalid-feedback">
-                                        Enter number of days
-                                    </div>
 
+                                <div class="col-md-4">
+                                    <label class="form-label" for="form3Example3c">Item Duration (days)</label> &nbsp; &nbsp;
+                                    <span style="color: red;"><?php echo $duration_err; ?></span>
+                                    <input type="text" name="Item_duration" id="form3Example3c" class="form-control" />
                                 </div>
+
                                 <div class="col-md-4">
                                     <label for="validationServer04" class="form-label">Categories</label>
-                                    <select class="form-select is-invalid" name="Item_type" id="validationServer04"
-                                        aria-describedby="validationServer04Feedback" required>
+                                    <select class="form-select " name="Item_type" id="validationServer04" aria-describedby="validationServer04Feedback" required>
                                         <option selected disabled value="">Choose categories...</option>
                                         <option>Products</option>
                                         <option>Tutoring services</option>
@@ -168,53 +217,31 @@
                                         <option>Hair-dressing services</option>
                                         <option>Other services</option>
                                     </select>
-                                    <div id="validationServer04Feedback" class="invalid-feedback">
-                                        Please select a valid state.
-                                    </div>
-                                </div>
-
-                                <div class="col-md-4">
-                                    <label for="validationServer01" class="form-label">Student ID</label>
-                                    <input type="text" name="studentid" class="form-control is-valid"
-                                        id="validationServer01" required>
-                                    <div class="valid-feedback">
-                                        Looks good!
-                                    </div>
                                 </div>
 
                                 <div class="col-md-4 pb-4">
                                     <label for="formFileMultiple" class="form-label">Upload Image</label>
                                     <div class="input-group has-validation">
-                                        <input class="form-control" name="Item_image" type="file" id="formFileMultiple"
-                                            multiple />
+                                        <input class="form-control" name="Item_image" type="file" id="formFileMultiple" multiple />
                                     </div>
                                 </div>
+
                                 <div class="col-md-6">
-                                    <label for="validationServer03" class="form-label">Additional
-                                        Information/Description</label>
-                                    <textarea type="text" name="Item_description" rows="3"
-                                        class="form-control is-invalid" id="validationServer03"
-                                        aria-describedby="validationServer03Feedback" required></textarea>
-                                    <div id="validationServer03Feedback" class="invalid-feedback">
-                                        Please enter additional Information.
-                                    </div>
+                                    <label class="form-label" for="form3Example3c"> Item Information / Description</label>
+                                    <p style="color: red;"><?php echo $info_err; ?></p>
+                                    <textarea type="text" name="Item_description" rows="3" class="form-control " id="form3Example3c"></textarea>
                                 </div>
 
                                 <div class="col-12">
                                     <div class="form-check">
-                                        <input class="form-check-input is-invalid" type="checkbox" value=""
-                                            id="invalidCheck3" aria-describedby="invalidCheck3Feedback" required>
-                                        <label class="form-check-label" for="invalidCheck3">
-                                            Agree to terms and conditions
-                                        </label>
-                                        <div id="invalidCheck3Feedback" class="invalid-feedback">
-                                            You must agree before submitting.
-                                        </div>
+                                        <input class="form-check-input is-invalid" type="checkbox" value="" id="invalidCheck3" aria-describedby="invalidCheck3Feedback" required>
+                                        <label class="form-check-label" for="invalidCheck3">Agree to terms and conditions</label>
+                                        <div id="invalidCheck3Feedback" class="invalid-feedback">You must agree before submitting.</div>
                                     </div>
                                 </div>
-                                <div class="col-12">
 
-                                    <button class="btn btn-primary" type="submit">Submit form</button>
+                                <div class="col-12">
+                                    <button class="btn btn-primary" name="submit" type="submit">Submit form</button>
                                 </div>
                             </form>
 

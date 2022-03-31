@@ -1,3 +1,42 @@
+<?php
+    session_start();
+    // remove all session variables
+    session_unset();
+
+    $name_err = "";
+    $pwd_err = "";
+    $user_name = $pwd =  "";
+
+    if(isset($_POST['submit'])){
+
+        if(empty($_POST['username'])){
+            $name_err = "Username is required";
+        }
+        
+        if(empty($_POST['password'])){
+            $pwd_err = "Password is required";
+        }
+        
+        if(!empty($_POST['password']) && !empty($_POST['username'])){
+            $user_name = $_POST['username'];
+            $pwd = $_POST['password'];
+
+            include_once('login_validation.php');
+        }
+        
+
+    }
+    
+    // function clean_input($data){
+    //     $data = trim($data);
+    //     $data = stripslashes($data);
+    //     $data = htmlspecialchars($data);
+
+    //     return $data;
+    // }
+?>
+
+
 <!doctype html>
 <html lang="en">
 
@@ -29,24 +68,26 @@
 
     <div class="container">
         <span class="form-header">Sign Up</span>
-        <form method="post" action="action_page.php" class="d-grid">
+        <form method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF'])?>" class="d-grid">
             <div class="mb-3 mt-3">
                 <label for="username">Username</label>
-                <input type="text" class="form-control" id="username" placeholder="Enter username" name="username">
+                <p style="color: red;"><?php echo $name_err ?></p>
+                <input type="text" class="form-control" name='username' id="username" placeholder="Enter username" value="<?php echo $user_name ?>">
             </div>
             <div class="mb-3">
                 <label for="pwd">Password</label>
-                <input type="password" class="form-control" id="pwd" placeholder="Enter password" name="pswd">
+                <p style="color: red;"><?php echo $pwd_err ?></p>
+                <input type="password" class="form-control" name='password' id="pwd" placeholder="Enter password">
             </div>
-            <div class="mb-4">
+            <div class="mb-2">
                 <label class="forget-pass">
                     <span class="psw"><a href="#">Forgot password?</a></span>
                 </label>
             </div>
 
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="submit" class="btn btn-primary" name="submit">Submit</button>
 
-            <span class="fine-print mt-3">Don't have an account? <a class="reg-here" href="#">Register
+            <span class="fine-print mt-3">Dont have an account <a class="reg-here" href="Sign-up.php">Register
                     here</a></span>
         </form>
     </div>
@@ -59,3 +100,4 @@
 </body>
 
 </html>
+

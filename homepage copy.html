@@ -1,0 +1,242 @@
+<?php
+session_start();
+?>
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="Stylesheet.css">
+    <link rel="stylesheet" href="./service-stylesheet.css">
+    <link rel="stylesheet" href="./font/bootstrap-icons.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+    <title>Hello, world!</title>
+</head>
+
+<body>
+    <!--navbar-->
+
+    <nav class="navbar navbar-expand-lg pt-1">
+
+        <!-- Navbar brand -->
+        <div>
+            <a class="navbar-brand" href="#">
+                <img src="./images/logo_transparent.png" width="80px" alt="">
+            </a>
+        </div>
+
+        <!-- Collapse button -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent1">
+            <span class="dark-blue-text">
+                <i class="bi bi-menu-up" style="color: #fce181; background-color: #026670;"></i>
+            </span>
+        </button>
+
+        <!-- Collapsible content -->
+        <div class="collapse navbar-collapse" id="navbarSupportedContent1">
+
+            <!-- Links -->
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item ">
+                    <a class="nav-link" href="homepage.php">
+                        <i class="bi-house-fill"></i>
+                        Home </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="product_page.php">
+                        <i class="bi-cart4"></i>
+                        Products</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="services.php">
+                        <i class="bi-gear-fill"></i>
+                        Services</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="profile.php">
+                        <i class="bi bi-person-video2"></i>
+                        <?php if(isset($_SESSION["user"])){
+                            echo $_SESSION["user"];}
+                            else{ echo "Profile";} ?></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="login.php" name="logout">
+                        <i class="bi-person-circle"></i>
+                        <?php if(isset($_SESSION["user"])){
+                            echo "Logout";}
+                            else{ echo "Login";} ?></a>
+                </li>
+            </ul>
+            <!-- Links -->
+
+        </div>
+        <!-- Collapsible content -->
+    </nav>
+    <!--coursal diagram-->
+    <section class="home-intro">
+        <div class="row row mx-lg-auto pt-3">
+            <div class="col-lg-12 col-md-12 px-5 crs-remove">
+                <div id="carouselExampleCaptions" class="carousel slide  mx-lg-auto " data-bs-ride="carousel">
+                    <div class="carousel-indicators">
+                        <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0"
+                            class="active" aria-current="true" aria-label="Slide 1"></button>
+                        <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1"
+                            aria-label="Slide 2"></button>
+                        <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2"
+                            aria-label="Slide 3"></button>
+                        <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="3"
+                            aria-label="Slide 4"></button>
+                        <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="4"
+                            aria-label="Slide 5"></button>
+                        <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="5"
+                            aria-label="Slide 6"></button>
+                    </div>
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <img src="./images/background1.jpg" class="d-block w-100" alt="..." height="500px">
+                            <div class="carousel-caption d-none d-md-block">
+                                <h5 class="title">WELCOME TO E-Market!!</h5>
+                                <p class="subtitle">A student platform with students interest at heart.</p>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <img src="./images/background3.jpg" class="d-block w-100" alt="..." height="500px">
+                            <div class="carousel-caption d-none d-md-block">
+                                <h5 class="title">WELCOME TO E-Market!!</h5>
+                                <p class="subtitle">A student platform with students interest at heart.</p>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <img src="./images/background2.jpg" class="d-block w-100" alt="..." height="500px">
+                            <div class="carousel-caption d-none d-md-block">
+                                <h5 class="title">WELCOME TO E-Market!!</h5>
+                                <p class="subtitle">A student platform with students interest at heart.</p>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <img src="./images/backgroung4.jpg" class="d-block w-100" alt="..." height="500px">
+                            <div class="carousel-caption d-none d-md-block">
+                                <h5 class="title">WELCOME TO E-Market!!</h5>
+                                <p class="subtitle">A student platform with students interest at heart.</p>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <img src="./images/background5.jpg" class="d-block w-100" alt="..." height="500px">
+                            <div class="carousel-caption d-none d-md-block">
+                                <h5 class="title">WELCOME TO E-Market!!</h5>
+                                <p class="subtitle">A student platform with students interest at heart.</p>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <img src="./images/background7.jpg" class="d-block w-100" alt="..." height="500px">
+                            <div class="carousel-caption d-none d-md-block">
+                                <h5 class="title">WELCOME TO E-Market!!</h5>
+                                <p class="subtitle">A student platform with students interest at heart.</p>
+                            </div>
+                        </div>
+
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions"
+                        data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions"
+                        data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="row colonm mt-lg-3 gap-2">
+            <div class="col-lg-3 crd">
+                <div class="row">
+                    <img src="./images/products.png" class=" picture " alt="...">
+                </div>
+                <div class="row">
+                    <h5 class="title">Colomn</h5>
+                    <p class="subtitle">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil molestias ullam,
+                        itaque asperiores
+                        ducimus non id reiciendis reprehenderit assumenda natus quasi nesciunt culpa quod corrupti,
+                        nobis ex consectetur qui! Iure?</p>
+
+                    <button type="button" class="btn btn-outline-secondary">Vist page</button>
+                </div>
+            </div>
+
+            <!--second card-->
+            <div class="col-lg-3 crd">
+                <div class="row">
+                    <img src="./images/products.png" class=" picture " alt="...">
+                </div>
+                <div class="row">
+                    <h5 class="title">Colomn</h5>
+                    <p class="subtitle">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil molestias ullam,
+                        itaque asperiores
+                        ducimus non id reiciendis reprehenderit assumenda natus quasi nesciunt culpa quod corrupti,
+                        nobis ex consectetur qui! Iure?</p>
+
+                    <button type="button" class="btn btn-outline-secondary">Vist page</button>
+                </div>
+            </div>
+
+            <!--Third card-->
+            <div class="col-lg-3 crd">
+                <div class="row">
+                    <img src="./images/products.png" class=" picture " alt="...">
+                </div>
+                <div class="row">
+                    <h5 class="title">Colomn</h5>
+                    <p class="subtitle">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil molestias ullam,
+                        itaque asperiores
+                        ducimus non id reiciendis reprehenderit assumenda natus quasi nesciunt culpa quod corrupti,
+                        nobis ex consectetur qui! Iure?</p>
+
+                    <button type="button" class="btn btn-outline-secondary">Vist page</button>
+                </div>
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+
+
+
+
+
+
+
+
+    <!-- Optional JavaScript; choose one of the two! -->
+
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+        crossorigin="anonymous"></script>
+
+    <!-- Option 2: Separate Popper and Bootstrap JS -->
+    <!--
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    -->
+</body>
+
+</html>

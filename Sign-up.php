@@ -1,49 +1,94 @@
-<?php
+<?php 
+$name_err = $fullname = "";
+$contact_details = $contact_detail_err="" ;
+$student_id = $student_id_err = "";
+$s_password = $pwd_err = "";
+$r_password = $r_pwd_err = "";
 
 if(isset($_POST['submit'])){
+    if(empty($_POST['fullname'])){
 
-        if(empty($_POST['fullname']))
-        {
-            echo 'A fullname is required <br/>';
-        }else
-        {
-        echo htmlspecialchars($_POST['fullname']);
+        $name_err="A fullname is required";
+    }else{
+        $fullname = clean_input($_POST['fullname']);
+        if(!preg_match("/^[a-zA-Z-' ]*$/",$fullname)){
+            $name_err = "Only letters and white space allowed";
+
+        }
+    }
+
+    if(empty($_POST['student_id'])){
+
+        $student_id_err= "A student id is required";
+    }else{
+
+        $student_id = clean_input($_POST['student_id']);
+        if(!preg_match("/^\\d+$/",$student_id)){
+            $student_id_err = "Only numbers allowed";
+        }
+    }
+
+    if(empty($_POST['contact_details'])){
+
+            $contact_detail_err="Contact details are required";
+    }else{
+        $contact_details=clean_input($_POST['contact_details']);
+
+        if(!preg_match("/^\\d+$/",$contact_details)) {
+                $contact_detail_err = "Only numbers allowed";
         }
 
-        if(empty($_POST['student_id']))
-        {
-            echo 'A student id is required <br/>';
-        }else
-        {
-        echo htmlspecialchars($_POST['student_id']);
-        }
+    }
 
-        if(empty($_POST['contact_details']))
-        {
-            echo 'Contact details are required <br/>';
-        }else
-        {
-        echo htmlspecialchars($_POST['contact_details']);
-        }
+    if(empty($_POST['s_password'])){
 
-        if(empty($_POST['s_password']))
-        {
-            echo 'A password is required <br/>';
-        }else
-        {
-        echo htmlspecialchars($_POST['s_password']);
-        }
+        $pwd_err="A password is required";
+    }else{
+        $s_password=htmlspecialchars($_POST['s_password']);
+        if(!preg_match("/^(?=.{10,}$)(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W).*$/",$s_password)){
+            $pwd_err= "Must be a minimum of 8 characters and contain at least 1 number,at 
+            least one uppercase character and lowercase character";
 
-        if(empty($_POST['r_password']))
-        {
-            echo 'Repeat password is required <br/>';
-        }else
-        {
-        echo htmlspecialchars($_POST['r_password']);
         }
+    }
+
+
+
+    if($s_password == $_POST['r_password']){
+
+        $r_password=htmlspecialchars($_POST["r_password"]);
+
+        if(!empty($_POST["fullname"]) && !empty($_POST["student_id"]) && !empty($_POST["contact_details"])
+    && !empty($_POST["s_password"]) && !empty($_POST["r_password"])){
+
+        $fullname = $_POST["fullname"];
+        $student_id = $_POST["student_id"];
+        $contact_details = $_POST["contact_details"];
+        $s_password = $_POST["s_password"];
+        $r_password = $_POST["r_password"];
+
+        include_once('signup_validation.php');
+    }
+    }else{
+        $r_pwd_err="Repeat password";
+        
+    }
+
+    
+        
+
 }
 
-?>
+    function clean_input($data){
+        $data = trim($data);
+        $data = stripslashes($data);
+        $data = htmlspecialchars($data);
+
+        return $data;
+    }
+
+
+ ?>
 
 <!doctype html>
 <html lang="en">
@@ -88,14 +133,16 @@ if(isset($_POST['submit'])){
 
                                     <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Sign up</p>
 
-                                    <form class="mx-1 mx-md-4" action="signup_data_capture.php" method="POST">
+                                    <form class="mx-1 mx-md-4" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF'])?>" method="POST">
 
                                         <div class="d-flex flex-row align-items-center mb-4">
                                             <i class="fas fa-user fa-lg me-3 fa-fw pb-4"></i>
                                             <div class="form-outline flex-fill mb-0">
+                                            <p style="color: red;"><?php echo $name_err; ?></p>
                                                 <input type="text" name="fullname" id="form3Example1c"
                                                     class="form-control" />
                                                 <label class="form-label" for="form3Example1c">Your FullName</label>
+                                                
                                             </div>
                                         </div>
 
@@ -103,37 +150,45 @@ if(isset($_POST['submit'])){
                                         <div class="d-flex flex-row align-items-center mb-4">
                                             <i class="fa fa-id-card fa-lg me-3 fa-fw pb-4"></i>
                                             <div class="form-outline flex-fill mb-0">
+                                            <p style="color: red;"><?php echo $student_id_err; ?></p>
                                                 <input type="text" name="student_id" id="form3Example3c"
-                                                    class="form-control" />
+                                                    class="form-control" value="<?php echo $student_id; ?>" />
                                                 <label class="form-label" for="form3Example3c">Your Student ID</label>
+                                                
                                             </div>
                                         </div>
 
                                         <div class="d-flex flex-row align-items-center mb-4">
                                             <i class="fa fa-phone fa-lg me-3 fa-fw pb-4"></i>
                                             <div class="form-outline flex-fill mb-0">
+                                            <p style="color: red;"><?php echo $contact_detail_err; ?></p>
                                                 <input type="text" name="contact_details" id="form3Example3c"
                                                     class="form-control" />
                                                 <label class="form-label" for="form3Example3c"> Your Contact
                                                     Details</label>
+                                                   
                                             </div>
                                         </div>
 
                                         <div class="d-flex flex-row align-items-center mb-4">
                                             <i class="fas fa-lock fa-lg me-3 fa-fw pb-4"></i>
                                             <div class="form-outline flex-fill mb-0">
+                                            <p style="color: red;"><?php echo $pwd_err; ?></p>
                                                 <input type="password" name="s_password" id="form3Example4c"
                                                     class="form-control" />
                                                 <label class="form-label" for="form3Example4c">Password</label>
+                                                
                                             </div>
                                         </div>
 
                                         <div class="d-flex flex-row align-items-center mb-4">
                                             <i class="fas fa-key fa-lg me-3 fa-fw pb-4"></i>
                                             <div class="form-outline flex-fill mb-0">
+                                            <p style="color: red;"><?php echo $r_pwd_err; ?></p>
                                                 <input type="password" name="r_password" id="form3Example4cd" class="form-control" />
                                                 <label class="form-label" for="form3Example4cd">Repeat your
                                                     password</label>
+                                                    
                                             </div>
                                         </div>
 
